@@ -5,16 +5,12 @@ const Main = styled.ul`
   list-style: none;
   padding: 20px;
   li {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.8);
     display: flex;
     justify-content: space-between;
-
     .buttons,
     .todo {
       display: flex;
-
       font-size: 1.3em;
-
       .check,
       .delete {
         display: flex;
@@ -28,6 +24,7 @@ const Main = styled.ul`
         width: 10px;
         height: 10px;
         color: white;
+        cursor: pointer;
       }
     }
     .todo {
@@ -40,22 +37,26 @@ const Main = styled.ul`
   }
 `;
 
-const List = () => {
+const List = props => {
   return (
     <Main>
-      <li>
+      <li
+        onClick={props.toggleComplete}
+        style={{
+          textDecoration: props.complete ? "line-through" : ""
+        }}
+      >
         <div className="todo">
-          <p>09:27</p>
-          <p>Check emails</p>
+          <p>{props.task}</p>
         </div>
+
         <div className="buttons">
           <div className="check">+</div>
-          <div className="delete">-</div>
+          <div className="delete" onClick={props.onDelete}>
+            -
+          </div>
         </div>
       </li>
-      <li>Item2</li>
-      <li>Item3</li>
-      <li>Item3</li>
     </Main>
   );
 };

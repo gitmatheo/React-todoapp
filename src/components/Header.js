@@ -14,7 +14,7 @@ const Main = styled.div`
 
 const Avatar = styled.div`
   background-color: rgba(0, 0, 0, 0.2);
-  background-image: url("./avatar.png");
+  background-image: url("../assets/images/avatar.png");
   background-position: center;
   background-size: cover;
   width: 80px;
@@ -28,8 +28,8 @@ const List = () => {
     <Main>
       <Avatar />
       <div className="info">
-        <h2>Mateusz Dominiak</h2>
-        <p>Junior Front-End Developer</p>
+        <h2>John Doe</h2>
+        <p> Front-End Developer</p>
       </div>
     </Main>
   );

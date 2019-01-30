@@ -21,7 +21,7 @@ const Main = styled.div`
   }
 `;
 
-const MainContainer = () => {
+const Date = () => {
   return (
     <Main>
       <p>
@@ -31,4 +31,4 @@ const MainContainer = () => {
   );
 };
 
-export default MainContainer;
+export default Date;
