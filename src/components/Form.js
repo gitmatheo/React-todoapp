@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import shortid from "shortid";
+// import shortid from "shortid";
 import styled from "styled-components";
 
+// shortid.generate(),
 const MainForm = styled.form`
   display: flex;
   justify-content: center;
@@ -48,7 +49,7 @@ class Form extends Component {
   handleSubmit = e => {
     e.preventDefault();
     this.props.onSubmit({
-      id: shortid.generate(),
+      id: Date.now(),
       time: "00.00",
       todo: this.state.text,
       complete: false

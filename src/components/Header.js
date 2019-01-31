@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import img from "../assets/images/avatar.png";
 
 const Main = styled.div`
   display: flex;
@@ -13,13 +14,13 @@ const Main = styled.div`
 `;
 
 const Avatar = styled.div`
-  background-color: rgba(0, 0, 0, 0.2);
-  background-image: url("../assets/images/avatar.png");
+  /* background-color: rgba(0, 0, 0, 0.2); */
+  background-image: url(${img});
   background-position: center;
   background-size: cover;
   width: 80px;
   height: 80px;
-  z-index: 50;
+  z-index: 50000;
   border-radius: 50%;
 `;
 
