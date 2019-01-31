@@ -14,7 +14,6 @@ const Main = styled.div`
 `;
 
 const Avatar = styled.div`
-  /* background-color: rgba(0, 0, 0, 0.2); */
   background-image: url(${img});
   background-position: center;
   background-size: cover;

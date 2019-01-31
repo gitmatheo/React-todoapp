@@ -1,13 +1,41 @@
 import React, { Component } from "react";
 import HeroImage from "./HeroImage.js";
-import styled from "styled-components";
 import List from "./List.js";
 import Header from "./Header.js";
 import Date from "./Date.js";
 import Form from "./Form.js";
 import Buttons from "./Buttons.js";
+import Footer from "./Footer.js";
+import Congratulations from "./Congratulations.js";
+import { CSSTransition } from "react-transition-group";
+import styled from "styled-components";
 import "./App.css";
 import "../assets/images/avatar.png";
+
+//Global Styles for styled components
+// const GlobalStyle = createGlobalStyle`
+// * {
+//   box-sizing: border-box;
+//   padding: 0;
+//   margin: 0;
+// }
+//   body {
+//     color: ${props => (props.whiteColor ? "white" : "black")};
+//     font-family: 'Montserrat', sans-serif;
+//     font-size: 12px;
+//   }
+//   @media (max-width: 768px) {
+//   body {
+//     font-size: 9px;
+//   }
+// }
+
+// @media (max-width: 480px) {
+//   body {
+//     font-size: 7.5px;
+//   }
+// }
+// `;
 
 const Ul = styled.ul`
   margin: 20px;
@@ -23,6 +51,16 @@ const Container = styled.div`
   box-shadow: 0 10px 20px -8px rgba(0, 0, 0, 0.8),
     10px 0px 20px -8px rgba(0, 0, 0, 0.5);
   width: 60vw;
+
+  @media (max-width: 768px) {
+    width: 75vw;
+    margin-left: -5vw;
+  }
+
+  @media (max-width: 480px) {
+    margin-left: 0;
+    width: 90vw;
+  }
 `;
 
 const InsideContainer = styled.div`
@@ -41,22 +79,26 @@ class App extends Component {
       {
         id: 1,
         todo: "Do workout",
-        complete: false
+        complete: false,
+        appear: true
       },
       {
         id: 2,
         todo: "Check emails",
-        complete: false
+        complete: false,
+        appear: true
       },
       {
         id: 3,
         todo: "Visit Grandma",
-        complete: false
+        complete: false,
+        appear: true
       },
       {
         id: 4,
         todo: "Go to the doctor",
-        complete: false
+        complete: false,
+        appear: true
       }
     ],
     tasksToShow: "all",
@@ -93,10 +135,9 @@ class App extends Component {
     });
   };
 
-  handleDeleteTask = id => {
-    console.log(id);
-    console.log(this.state.tasks.filter(task => task.id !== id));
+  handleDeleteTask = (id, appear) => {
     this.setState({
+      appear: !this.state.tasks.appear,
       tasks: this.state.tasks.filter(task => task.id !== id)
     });
   };
@@ -144,44 +185,50 @@ class App extends Component {
     }
     return (
       <div className="App">
+        {/* <GlobalStyle /> */}
         <HeroImage />
-        <Container>
-          <InsideContainer>
-            <Header />
-            <Form onSubmit={this.onSubmit} />
-            <div className="number-of-tasks">
-              Number of tasks todo:
-              <strong>
-                {this.state.tasks.filter(task => !task.complete).length}
-              </strong>
-            </div>
+        <CSSTransition in={true} appear={true} classNames="fade" timeout={1000}>
+          <Container>
+            <InsideContainer>
+              <Header />
 
-            <Buttons
-              all={() => this.updateTasksToShow("all")}
-              active={() => this.updateTasksToShow("active")}
-              complete={() => this.updateTasksToShow("complete")}
-              toggleAll={() => this.toggleAll()}
-              tasks={this.state.tasks}
-              deleteCompleteTasks={this.deleteCompleteTasks}
-              tasksToShow={this.state.tasksToShow}
-            />
+              <Form onSubmit={this.onSubmit} />
+              <div className="number-of-tasks">
+                Number of tasks todo:
+                <strong>
+                  {this.state.tasks.filter(task => !task.complete).length}
+                </strong>
+              </div>
 
-            <Ul>
-              {tasks.map(task => (
-                <List
-                  key={task.id}
-                  toggleComplete={() => this.toggleComplete(task.id)}
-                  onDelete={() => this.handleDeleteTask(task.id)}
-                  task={task.todo}
-                  time={task.time}
-                  complete={task.complete}
-                />
-              ))}
-            </Ul>
-          </InsideContainer>
-
-          <Date />
-        </Container>
+              <Buttons
+                all={() => this.updateTasksToShow("all")}
+                active={() => this.updateTasksToShow("active")}
+                complete={() => this.updateTasksToShow("complete")}
+                toggleAll={() => this.toggleAll()}
+                tasks={this.state.tasks}
+                deleteCompleteTasks={this.deleteCompleteTasks}
+                tasksToShow={this.state.tasksToShow}
+              />
+              <Congratulations tasks={this.state.tasks} />
+              <Ul>
+                {tasks.map(task => (
+                  <List
+                    key={task.id}
+                    toggleComplete={() => this.toggleComplete(task.id)}
+                    onDelete={() => this.handleDeleteTask(task.id, task.appear)}
+                    task={task.todo}
+                    time={task.time}
+                    complete={task.complete}
+                    appear={task.appear}
+                    id={task.id}
+                  />
+                ))}
+              </Ul>
+            </InsideContainer>
+            <Date />
+          </Container>
+        </CSSTransition>
+        <Footer />
       </div>
     );
   }

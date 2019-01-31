@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import img from "../assets/images/bg2.jpg";
+import img from "../assets/images/bg.jpg";
 
 const HeroImg = styled.div`
   position: fixed;
@@ -20,8 +20,8 @@ const HeroImg = styled.div`
     left: 0;
     width: 100%;
     height: 100%;
-    background: white;
-    opacity: 0.3;
+    background: linear-gradient(to right, #800080, #ffc0cb);
+    opacity: 0.8;
   }
 `;
 const HeroImage = () => {

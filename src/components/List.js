@@ -6,7 +6,7 @@ import {
   faTimesCircle
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Transition } from "react-transition-group";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
 
 const Main = styled.li`
   display: flex;
@@ -21,7 +21,7 @@ const Main = styled.li`
       display: flex;
       justify-content: center;
       align-items: center;
-      border: 2px solid violet;
+      border: 2px solid #800080;
       border-radius: 50px;
       width: 32px;
       height: 32px;
@@ -29,12 +29,12 @@ const Main = styled.li`
 
       * {
         border-radius: 50px;
-        color: violet;
+        color: #800080;
         background: white;
         transition: 0.3s;
         &:hover {
           color: white;
-          background: violet;
+          background: #800080;
         }
       }
     }
@@ -53,36 +53,44 @@ const Main = styled.li`
 
 const List = props => {
   return (
-    <Transition timeout={1000} in={true} appear>
-      <Main>
-        <div
-          className="todo"
-          style={{
-            textDecoration: props.complete ? "line-through" : ""
-          }}
+    <Main>
+      <TransitionGroup>
+        <CSSTransition
+          key={props.id}
+          in={true}
+          appear
+          classNames="slide"
+          timeout={600}
         >
-          <p>{props.task}</p>
-        </div>
-        <div className="buttons">
-          <div className="check" onClick={props.toggleComplete}>
-            {props.complete ? (
-              <FontAwesomeIcon icon={faMinusCircle} size="lg" />
-            ) : (
-              <FontAwesomeIcon icon={faCheckCircle} size="lg" />
-            )}
+          <div
+            className="todo"
+            style={{
+              textDecoration: props.complete ? "line-through" : ""
+            }}
+          >
+            <p>{props.task}</p>
           </div>
-          <div className="delete">
-            {props.complete ? (
-              <FontAwesomeIcon
-                icon={faTimesCircle}
-                size="lg"
-                onClick={props.onDelete}
-              />
-            ) : null}
-          </div>
+        </CSSTransition>
+      </TransitionGroup>
+      <div className="buttons">
+        <div className="check" onClick={props.toggleComplete}>
+          {props.complete ? (
+            <FontAwesomeIcon icon={faMinusCircle} size="lg" />
+          ) : (
+            <FontAwesomeIcon icon={faCheckCircle} size="lg" />
+          )}
         </div>
-      </Main>
-    </Transition>
+        <div className="delete">
+          {props.complete ? (
+            <FontAwesomeIcon
+              icon={faTimesCircle}
+              size="lg"
+              onClick={props.onDelete}
+            />
+          ) : null}
+        </div>
+      </div>
+    </Main>
   );
 };
 
