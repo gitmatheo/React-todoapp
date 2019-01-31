@@ -9,6 +9,10 @@ import Buttons from "./Buttons.js";
 import "./App.css";
 import "../assets/images/avatar.png";
 
+const Ul = styled.ul`
+  margin: 20px;
+`;
+
 const Container = styled.div`
   position: absolute;
   top: 50%;
@@ -59,10 +63,12 @@ class App extends Component {
     toggleAllComplete: true
   };
 
-  addTask = task => {
-    this.setState({
-      tasks: [task, ...this.state.tasks]
-    });
+  onSubmit = task => {
+    if (task.todo !== "") {
+      this.setState({
+        tasks: [task, ...this.state.tasks]
+      });
+    }
   };
 
   toggleComplete = id => {
@@ -142,7 +148,7 @@ class App extends Component {
         <Container>
           <InsideContainer>
             <Header />
-            <Form onSubmit={this.addTask} />
+            <Form onSubmit={this.onSubmit} />
             <div className="number-of-tasks">
               Number of tasks todo:
               <strong>
@@ -157,9 +163,10 @@ class App extends Component {
               toggleAll={() => this.toggleAll()}
               tasks={this.state.tasks}
               deleteCompleteTasks={this.deleteCompleteTasks}
+              tasksToShow={this.state.tasksToShow}
             />
 
-            <ul>
+            <Ul>
               {tasks.map(task => (
                 <List
                   key={task.id}
@@ -170,7 +177,7 @@ class App extends Component {
                   complete={task.complete}
                 />
               ))}
-            </ul>
+            </Ul>
           </InsideContainer>
 
           <Date />
