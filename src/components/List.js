@@ -18,24 +18,17 @@ const Main = styled.li`
     font-size: 1.3em;
     .check,
     .delete {
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      cursor: pointer;
       border: 2px solid #800080;
       border-radius: 50px;
       width: 32px;
       height: 32px;
-      cursor: pointer;
-
-      * {
-        border-radius: 50px;
-        color: #800080;
-        background: white;
-        transition: 0.3s;
-        &:hover {
-          color: white;
-          background: #800080;
-        }
+      color: #800080;
+      background: white;
+      transition: 0.3s;
+      &:hover {
+        color: white;
+        background: #800080;
       }
     }
   }
@@ -73,22 +66,30 @@ const List = props => {
         </CSSTransition>
       </TransitionGroup>
       <div className="buttons">
-        <div className="check" onClick={props.toggleComplete}>
-          {props.complete ? (
-            <FontAwesomeIcon icon={faMinusCircle} size="lg" />
-          ) : (
-            <FontAwesomeIcon icon={faCheckCircle} size="lg" />
-          )}
-        </div>
-        <div className="delete">
-          {props.complete ? (
-            <FontAwesomeIcon
-              icon={faTimesCircle}
-              size="lg"
-              onClick={props.onDelete}
-            />
-          ) : null}
-        </div>
+        {props.complete ? (
+          <FontAwesomeIcon
+            onClick={props.toggleComplete}
+            className="check"
+            icon={faMinusCircle}
+            size="lg"
+          />
+        ) : (
+          <FontAwesomeIcon
+            onClick={props.toggleComplete}
+            className="check"
+            icon={faCheckCircle}
+            size="lg"
+          />
+        )}
+
+        {props.complete ? (
+          <FontAwesomeIcon
+            className="delete"
+            icon={faTimesCircle}
+            size="lg"
+            onClick={props.onDelete}
+          />
+        ) : null}
       </div>
     </Main>
   );

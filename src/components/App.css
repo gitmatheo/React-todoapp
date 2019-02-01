@@ -4,6 +4,20 @@
   box-sizing: border-box;
 }
 
+/* body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+div.App {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+  background: yellow;
+} */
 :root {
   --duration1: 1000ms;
   --duration2: 600ms;

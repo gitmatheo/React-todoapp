@@ -7,59 +7,32 @@ import Form from "./Form.js";
 import Buttons from "./Buttons.js";
 import Footer from "./Footer.js";
 import Congratulations from "./Congratulations.js";
-import { CSSTransition } from "react-transition-group";
 import styled from "styled-components";
 import "./App.css";
 import "../assets/images/avatar.png";
-
-//Global Styles for styled components
-// const GlobalStyle = createGlobalStyle`
-// * {
-//   box-sizing: border-box;
-//   padding: 0;
-//   margin: 0;
-// }
-//   body {
-//     color: ${props => (props.whiteColor ? "white" : "black")};
-//     font-family: 'Montserrat', sans-serif;
-//     font-size: 12px;
-//   }
-//   @media (max-width: 768px) {
-//   body {
-//     font-size: 9px;
-//   }
-// }
-
-// @media (max-width: 480px) {
-//   body {
-//     font-size: 7.5px;
-//   }
-// }
-// `;
 
 const Ul = styled.ul`
   margin: 20px;
 `;
 
 const Container = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  position: relative;
   background: rgba(255, 255, 255, 0.9);
   border-radius: 5px;
-  box-shadow: 0 10px 20px -8px rgba(0, 0, 0, 0.8),
-    10px 0px 20px -8px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 10px 30px -8px rgba(0, 0, 0, 0.3),
+    10px 0px 30px -8px rgba(0, 0, 0, 0.3),
+    -10px 0px 30px -8px rgba(0, 0, 0, 0.3),
+    0px -10px 30px -8px rgba(0, 0, 0, 0.3);
   width: 60vw;
+  margin: 10% auto;
 
   @media (max-width: 768px) {
     width: 75vw;
-    margin-left: -5vw;
   }
 
   @media (max-width: 480px) {
-    margin-left: 0;
     width: 90vw;
+    margin: 10% auto;
   }
 `;
 
@@ -67,6 +40,7 @@ const InsideContainer = styled.div`
   width: 95%;
   min-height: 30vh;
   box-shadow: 10px 0px 20px -12px rgba(0, 0, 0, 0.5);
+  z-index: 10000;
   div.number-of-tasks {
     text-align: center;
     padding: 10px;
@@ -185,49 +159,45 @@ class App extends Component {
     }
     return (
       <div className="App">
-        {/* <GlobalStyle /> */}
         <HeroImage />
-        <CSSTransition in={true} appear={true} classNames="fade" timeout={1000}>
-          <Container>
-            <InsideContainer>
-              <Header />
+        <Container>
+          <InsideContainer>
+            <Header />
+            <Form onSubmit={this.onSubmit} />
+            <div className="number-of-tasks">
+              Number of tasks todo:
+              <strong>
+                {this.state.tasks.filter(task => !task.complete).length}
+              </strong>
+            </div>
 
-              <Form onSubmit={this.onSubmit} />
-              <div className="number-of-tasks">
-                Number of tasks todo:
-                <strong>
-                  {this.state.tasks.filter(task => !task.complete).length}
-                </strong>
-              </div>
-
-              <Buttons
-                all={() => this.updateTasksToShow("all")}
-                active={() => this.updateTasksToShow("active")}
-                complete={() => this.updateTasksToShow("complete")}
-                toggleAll={() => this.toggleAll()}
-                tasks={this.state.tasks}
-                deleteCompleteTasks={this.deleteCompleteTasks}
-                tasksToShow={this.state.tasksToShow}
-              />
-              <Congratulations tasks={this.state.tasks} />
-              <Ul>
-                {tasks.map(task => (
-                  <List
-                    key={task.id}
-                    toggleComplete={() => this.toggleComplete(task.id)}
-                    onDelete={() => this.handleDeleteTask(task.id, task.appear)}
-                    task={task.todo}
-                    time={task.time}
-                    complete={task.complete}
-                    appear={task.appear}
-                    id={task.id}
-                  />
-                ))}
-              </Ul>
-            </InsideContainer>
-            <Date />
-          </Container>
-        </CSSTransition>
+            <Buttons
+              all={() => this.updateTasksToShow("all")}
+              active={() => this.updateTasksToShow("active")}
+              complete={() => this.updateTasksToShow("complete")}
+              toggleAll={() => this.toggleAll()}
+              tasks={this.state.tasks}
+              deleteCompleteTasks={this.deleteCompleteTasks}
+              tasksToShow={this.state.tasksToShow}
+            />
+            <Congratulations tasks={this.state.tasks} />
+            <Ul>
+              {tasks.map(task => (
+                <List
+                  key={task.id}
+                  toggleComplete={() => this.toggleComplete(task.id)}
+                  onDelete={() => this.handleDeleteTask(task.id, task.appear)}
+                  task={task.todo}
+                  time={task.time}
+                  complete={task.complete}
+                  appear={task.appear}
+                  id={task.id}
+                />
+              ))}
+            </Ul>
+          </InsideContainer>
+          <Date />
+        </Container>
         <Footer />
       </div>
     );
