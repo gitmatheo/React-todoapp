@@ -41,15 +41,19 @@ const Main = styled.li`
   .buttons {
     flex-basis: 15%;
     justify-content: space-around;
+    * {
+      margin: 0 3px;
+    }
   }
 `;
 
-const List = props => {
+const Task = props => {
+  const { id, todo, complete } = props.task;
   return (
     <Main>
       <TransitionGroup>
         <CSSTransition
-          key={props.id}
+          key={id}
           in={true}
           appear
           classNames="slide"
@@ -58,36 +62,36 @@ const List = props => {
           <div
             className="todo"
             style={{
-              textDecoration: props.complete ? "line-through" : ""
+              textDecoration: complete ? "line-through" : ""
             }}
           >
-            <p>{props.task}</p>
+            <p>{todo}</p>
           </div>
         </CSSTransition>
       </TransitionGroup>
       <div className="buttons">
-        {props.complete ? (
+        {complete ? (
           <FontAwesomeIcon
-            onClick={props.toggleComplete}
+            onClick={() => props.toggleComplete(id)}
             className="check"
             icon={faMinusCircle}
             size="lg"
           />
         ) : (
           <FontAwesomeIcon
-            onClick={props.toggleComplete}
+            onClick={() => props.toggleComplete(id)}
             className="check"
             icon={faCheckCircle}
             size="lg"
           />
         )}
 
-        {props.complete ? (
+        {complete ? (
           <FontAwesomeIcon
             className="delete"
             icon={faTimesCircle}
             size="lg"
-            onClick={props.onDelete}
+            onClick={() => props.onDelete(id)}
           />
         ) : null}
       </div>
@@ -95,4 +99,4 @@ const List = props => {
   );
 };
 
-export default List;
+export default Task;

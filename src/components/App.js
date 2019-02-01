@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import HeroImage from "./HeroImage.js";
-import List from "./List.js";
+import ListOfTasks from "./ListOfTasks.js";
 import Header from "./Header.js";
 import Date from "./Date.js";
 import Form from "./Form.js";
@@ -10,6 +10,7 @@ import Congratulations from "./Congratulations.js";
 import styled from "styled-components";
 import "./App.css";
 import "../assets/images/avatar.png";
+import NumberOfTasksToDo from "./NumberOfTasksToDo.js";
 
 const Ul = styled.ul`
   margin: 20px;
@@ -41,10 +42,6 @@ const InsideContainer = styled.div`
   min-height: 30vh;
   box-shadow: 10px 0px 20px -12px rgba(0, 0, 0, 0.5);
   z-index: 10000;
-  div.number-of-tasks {
-    text-align: center;
-    padding: 10px;
-  }
 `;
 
 class App extends Component {
@@ -88,6 +85,7 @@ class App extends Component {
   };
 
   toggleComplete = id => {
+    console.log("toggle complete o ID " + id);
     this.setState({
       tasks: this.state.tasks.map(task => {
         if (task.id === id) {
@@ -164,12 +162,8 @@ class App extends Component {
           <InsideContainer>
             <Header />
             <Form onSubmit={this.onSubmit} />
-            <div className="number-of-tasks">
-              Number of tasks todo:
-              <strong>
-                {this.state.tasks.filter(task => !task.complete).length}
-              </strong>
-            </div>
+
+            <NumberOfTasksToDo tasks={this.state.tasks} />
 
             <Buttons
               all={() => this.updateTasksToShow("all")}
@@ -182,18 +176,11 @@ class App extends Component {
             />
             <Congratulations tasks={this.state.tasks} />
             <Ul>
-              {tasks.map(task => (
-                <List
-                  key={task.id}
-                  toggleComplete={() => this.toggleComplete(task.id)}
-                  onDelete={() => this.handleDeleteTask(task.id, task.appear)}
-                  task={task.todo}
-                  time={task.time}
-                  complete={task.complete}
-                  appear={task.appear}
-                  id={task.id}
-                />
-              ))}
+              <ListOfTasks
+                tasks={this.state.tasks}
+                toggleComplete={this.toggleComplete}
+                onDelete={this.handleDeleteTask}
+              />
             </Ul>
           </InsideContainer>
           <Date />
